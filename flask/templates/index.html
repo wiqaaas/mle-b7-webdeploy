@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flask ML App</title>
+</head>
+<body>
+    <h1>Flask ML App</h1>
+
+    <h2>Predict Tabular Data</h2>
+    <textarea id="tabularInput" rows="5" cols="40"></textarea>
+    <button onclick="predictTabular()">Predict</button>
+    <p id="tabularResult"></p>
+
+    <h2>Predict Text Data</h2>
+    <input type="text" id="textInput" placeholder="Enter text">
+    <button onclick="predictText()">Predict</button>
+    <p id="textResult"></p>
+
+    <h2>Predict Image Data</h2>
+    <input type="file" id="imageInput">
+    <button onclick="predictImage()">Predict</button>
+    <p id="imageResult"></p>
+
+    <script>
+        async function predictTabular() {
+            const data = JSON.parse(document.getElementById("tabularInput").value);
+            const response = await fetch("/predict/tabular", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            });
+            const result = await response.json();
+            document.getElementById("tabularResult").innerText = JSON.stringify(result);
+        }
+
+        async function predictText() {
+            const text = document.getElementById("textInput").value;
+            const response = await fetch("/predict/text", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ text })
+            });
+            const result = await response.json();
+            document.getElementById("textResult").innerText = JSON.stringify(result);
+        }
+
+        async function predictImage() {
+            const formData = new FormData();
+            formData.append("image", document.getElementById("imageInput").files[0]);
+            const response = await fetch("/predict/image", { method: "POST", body: formData });
+            const result = await response.json();
+            document.getElementById("imageResult").innerText = JSON.stringify(result);
+        }
+    </script>
+</body>
+</html>

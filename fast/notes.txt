@@ -1,0 +1,44 @@
+# AI Model (Deploy)
+# Scale this deployment
+# 100000 user (scaling traffic)
+
+# nginx, uvicorn, WSGI (flask and ASGI (fast)
+
+# single server (single ec2 is running flask/fast api)
+# larger ec2 will handle more traffic however there is still limitation
+# 1000 ec2 servers running same flask/fast app
+# load balancing (nginx allows you to do that)
+# 1 ec2 server containing nginx and also the info of all other 1000 ec2 servers 
+
+# static requests, dynamic requests
+
+# request by client/user is sent to nginx
+# nginx return the result of static query
+# nginx would send the dynamic request to uvicorn 
+# it also does the load balancing
+
+# request from nginx is in http format
+# uvicorn takes the request from nginx and converts it into python readable format
+# uvicorn sends the converted formatted request to flask/fast
+# flask/fast returns the result for the request to uvicorn
+
+# uvicorn gives that result back to nginx
+# nginx shows the result to the client/user
+
+
+# WSGI (a protocol that processes requests one at a time.
+# ASGI (asynchronous, allows multiple requests to be handled at the same time. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
